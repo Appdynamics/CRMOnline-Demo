@@ -1,0 +1,2 @@
+source env.sh 
+java -Drabbitmq.host=$RABBITMQ_HOST -Drabbitmq.port=$RABBITMQ_PORT -Djdbc.connectionUrl=$MYSQL_URL -Djdbc.username=$MYSQL_USER -Djdbc.password=$MYSQL_PWD -Djetty.port=8707 -Dappdynamics.controller.hostName=$CONTROLLER_HOST -Dappdynamics.controller.port=$CONTROLLER_PORT -Dappdynamics.controller.ssl.enabled=false -Dappdynamics.agent.applicationName=Telecom_Region -Dappdynamics.agent.tierName=Region_Server -Dappdynamics.agent.nodeName=Region_Server_Node1 -javaagent:$JAVA_AGENT_PATH -jar ../../../target/telecom-demo.war 

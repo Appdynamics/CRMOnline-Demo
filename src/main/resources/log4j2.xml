@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration monitorInterval="30">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] [%X{x-user-email}] %-5level %logger{36} - %msg%n"/>
+        </Console>
+        <RollingFile name="CRMLoad" fileName="crm-load.log"
+                     filePattern="crm-load.%i.log.gz">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] [%X{x-user-email}] %-5level %logger{36} - %msg%n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="5 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>      
+    </Appenders>
+    <Loggers>
+        <Logger name="com.appdynamics.loadgen.CRMOnlineLoadGen" level="info" additivity="false">
+            <AppenderRef ref="CRMLoad"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>

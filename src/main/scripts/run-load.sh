@@ -1,0 +1,1 @@
+java -cp ../../../target/telecom-demo.war com.appdynamics.loadgen.QuoteLoadRunner
