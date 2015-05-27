@@ -4,16 +4,16 @@ package com.appdynamics.crm;
  * Created by abey.tom on 10/15/14.
  */
 public class CRMRequest {
-    private String userRegion;
+    private String customerType;
     private String customerName;
     private String userName;
 
-    public String getUserRegion() {
-        return userRegion;
+    public String getCustomerType() {
+        return customerType;
     }
 
-    public void setUserRegion(String userRegion) {
-        this.userRegion = userRegion;
+    public void setCustomerType(String customerType) {
+        this.customerType = customerType;
     }
 
     public String getCustomerName() {
@@ -36,7 +36,7 @@ public class CRMRequest {
     @Override
     public String toString() {
         return "CRMRequest{" +
-                "userRegion='" + userRegion + '\'' +
+                "customerType='" + customerType + '\'' +
                 ", customerName='" + customerName + '\'' +
                 ", userName='" + userName + '\'' +
                 '}';

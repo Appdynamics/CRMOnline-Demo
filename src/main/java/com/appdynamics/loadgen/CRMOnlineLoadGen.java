@@ -68,15 +68,15 @@ public class CRMOnlineLoadGen {
         String[] urls = urlsStr.split(",");
         List<Double> urlPercents = getUrlPercents(properties, urls);
 
-        String regionsStr = properties.getProperty("load.regions");
-        Assert.hasText(regionsStr, propNotFoundMsg("load.regions", propFile));
-        String[] regions = regionsStr.split(",");
+        String customerTypesStr = properties.getProperty("load.customerTypes");
+        Assert.hasText(customerTypesStr, propNotFoundMsg("load.customerTypes", propFile));
+        String[] customerTypes = customerTypesStr.split(",");
 
 //        String customerPercentsStr = properties.getProperty("load.customer.percentages");
 //        Assert.hasText(customerPercentsStr, propNotFoundMsg("load.customer.percentages", propFile));
 //        List<Double> customerPercents = getCustomerPercents(customerPercentsStr.split(","));
 
-        Map<String, List<Double>> urlRegionPercents = getUrlRegionPercents(properties, urls, regions);
+        Map<String, List<Double>> urlcustomerTypePercents = getUrlcustomerTypePercents(properties, urls, customerTypes);
         Random random = new Random();
         while (true) {
             try {
@@ -89,19 +89,39 @@ public class CRMOnlineLoadGen {
                         break;
                     }
                 }
-                int locationRandom = random.nextInt(100);
-                String location = null;
-                List<Double> locationPercents = urlRegionPercents.get(url);
-                for (int i = 0; i < locationPercents.size(); i++) {
-                    Double val = locationPercents.get(i);
-                    if (locationRandom < val) {
-                        location = regions[i];
+                int typeRandom = random.nextInt(100);
+                String type = null;
+                List<Double> typePercents = urlcustomerTypePercents.get(url);
+            
+                //int customerRandom = random.nextInt(100);
+                //String customer = customers[random.nextInt(customers.length)];
+                String customer = null;
+
+                for (int i = 0; i < typePercents.size(); i++) {
+                    Double val = typePercents.get(i);
+                    if (typeRandom < val) {
+                        logger.info(String.format("typeRandom=%s, val=%s, i=%s", typeRandom, val, i));
+                        type = customerTypes[i];
+
+                        logger.info(String.format("customers.length=%s, customerTypes.length=%s", customers.length, customerTypes.length));
+                        int j = customers.length/customerTypes.length;
+                        int k = i+random.nextInt(j)*customerTypes.length;
+                        
+                        logger.info(String.format("j=%s, k=%s, i=%s", j, k, i));
+
+                        if (k>customers.length) {
+                            k = i;
+                        } 
+
+                        logger.info(String.format("j=%s, k=%s, i=%s", j, k, i));
+
+                        customer = customers[k];
                         break;
                     }
                 }
-                logger.info(String.format("The url=%s and region=%s", url, location));
-                int customerRandom = random.nextInt(100);
-                String customer = customers[random.nextInt(customers.length)];
+
+                logger.info(String.format("The url=%s, customerType=%s, customer=%s", url, type, customer));
+                
 //                for (int i = 0; i < customerPercents.size(); i++) {
 //                    Double val = customerPercents.get(i);
 //                    if (customerRandom < val) {
@@ -110,7 +130,7 @@ public class CRMOnlineLoadGen {
 //                    }
 //                }
 
-                makeHttpCall(customer, baseUrl, url, location, emailGenerator.generateEmail(customer));
+                makeHttpCall(customer, baseUrl, url, type, emailGenerator.generateEmail(customer));
 
                 Thread.sleep(delay);
             } catch (Exception e) {
@@ -130,11 +150,11 @@ public class CRMOnlineLoadGen {
         return String.format("The expected property '%s' is not found in the property file %s", propName, path);
     }
 
-    private static void makeHttpCall(String customer, String baseUrl, String path, String region, String email) {
+    private static void makeHttpCall(String customer, String baseUrl, String path, String customerType, String email) {
         CRMRequest request = new CRMRequest();
         request.setCustomerName(customer);
         request.setUserName(email);
-        request.setUserRegion(region);
+        request.setCustomerType(customerType);
         String requestId = UUID.randomUUID().toString();
         String urlStr = baseUrl + encode(path) + "?requestId=" + requestId;
         logger.info("Invoking the CRM Online url " + urlStr);
@@ -172,22 +192,22 @@ public class CRMOnlineLoadGen {
         }
     }
 
-    private static Map<String, List<Double>> getUrlRegionPercents(Properties properties, String[] urls, String[] locations) {
-        Map<String, List<Double>> urlLocationMap = new HashMap<String, List<Double>>();
+    private static Map<String, List<Double>> getUrlcustomerTypePercents(Properties properties, String[] urls, String[] types) {
+        Map<String, List<Double>> urltypeMap = new HashMap<String, List<Double>>();
         for (String url : urls) {
             double currentSum = 0;
-            List<Double> urlLocationPercents = new ArrayList<Double>();
-            for (String location : locations) {
-                String propName = "load." + url + "." + location + ".percentage";
+            List<Double> urltypePercents = new ArrayList<Double>();
+            for (String type : types) {
+                String propName = "load." + url + "." + type + ".percentage";
                 String propValueStr = properties.getProperty(propName);
                 Assert.hasText(propValueStr, propNotFoundMsg(propName, null));
                 double val = Double.parseDouble(propValueStr);
                 currentSum += val;
-                urlLocationPercents.add(currentSum);
+                urltypePercents.add(currentSum);
             }
-            urlLocationMap.put(url, urlLocationPercents);
+            urltypeMap.put(url, urltypePercents);
         }
-        return urlLocationMap;
+        return urltypeMap;
     }
 
     private static List<Double> getUrlPercents(Properties properties, String[] urls) {
