@@ -4,7 +4,7 @@
 
 source env.sh
 
-export PROP="-Xms512m -Xmx512m -Dactivemq.port=$ACTIVEMQ_PORT -Djdbc.connectionUrl=$MYSQL_URL -Djdbc.username=$MYSQL_USER -Djdbc.password=$MYSQL_PWD -Dappdynamics.controller.hostName=$CONTROLLER_HOST -Dappdynamics.controller.port=$CONTROLLER_PORT -Dappdynamics.controller.ssl.enabled=false -Dcrmonline-demo-server=true"
+export PROP="-Xms512m -Xmx512m -Dactivemq.port=$ACTIVEMQ_PORT -Djdbc.connectionUrl=$MYSQL_URL -Djdbc.username=$MYSQL_USER -Djdbc.password=$MYSQL_PWD -Dappdynamics.controller.hostName=$CONTROLLER_HOST -Dappdynamics.controller.port=$CONTROLLER_PORT -Dappdynamics.agent.accountName=$ACCOUNT_NAME -Dappdynamics.agent.accountAccessKey=$ACCOUNT_ACCESS_KEY -Dappdynamics.controller.ssl.enabled=false -Dtelecom-demo-server=true"
 
 export WAR_PATH="crmonline-demo.war"
 

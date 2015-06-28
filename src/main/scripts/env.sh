@@ -20,5 +20,17 @@ then
     JAVA_AGENT_PATH=/Users/schoudhury/dev/appdynamics/appagent/javaagent.jar
 fi
 
+if [ "$ACCOUNT_NAME" = "" ]
+then
+echo "ACCOUNT_NAME NOT Found, setting to default"
+ACCOUNT_NAME=customer1
+fi
+
+if [ "$ACCOUNT_ACCESS_KEY" = "" ]
+then
+echo "ACCOUNT_ACCESS_KEY NOT Found, setting to default"
+ACCOUNT_ACCESS_KEY=
+fi
+
 # This is the port on which active mq starts
 ACTIVEMQ_PORT=61617
