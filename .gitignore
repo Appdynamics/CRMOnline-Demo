@@ -3,3 +3,6 @@ target
 build
 .DS_Store
 *.log
+AppServerAgent.zip
+apache-maven-3.3.3-bin.tar.gz
+jdk-7u79-linux-x64.rpm

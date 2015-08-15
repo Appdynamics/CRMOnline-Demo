@@ -1,35 +1,51 @@
 #!/bin/bash
 
-source ~/appdynamics-env.sh
-
-if [ "$CONTROLLER_HOST" = "" ]
+if [ -z ${CONTROLLER_HOST} ]
 then
-    echo "CONTROLLER_HOST NOT Found, setting it to localhost"
+    echo "CONTROLLER_HOST not set, defaulting to localhost"
     CONTROLLER_HOST=localhost
+else
+    echo "CONTROLLER_HOST: ${CONTROLLER_HOST}"
 fi
 
-if [ "$CONTROLLER_PORT" = "" ]
+if [ -z ${CONTROLLER_PORT} ]
 then
-    echo "CONTROLLER_PORT NOT Found, setting it to 8090"
+    echo "CONTROLLER_PORT not set, defaulting to 8090"
     CONTROLLER_PORT=8090
+else
+    echo "CONTROLLER_PORT: ${CONTROLLER_PORT}"
 fi
 
-if [ "$JAVA_AGENT_PATH" = "" ]
+if [ -z ${JAVA_AGENT_PATH} ]
 then
-    echo "JAVA_AGENT_PATH NOT Found, setting it to /Users/schoudhury/dev/appdynamics/appagent/javaagent.jar"
-    JAVA_AGENT_PATH=/Users/schoudhury/dev/appdynamics/appagent/javaagent.jar
+    JAVA_AGENT_PATH=/AppDynamics/javaagent.jar
+    echo "JAVA_AGENT_PATH: ${JAVA_AGENT_PATH}"
+else
+    echo "JAVA_AGENT_PATH: ${JAVA_AGENT_PATH}"
 fi
 
-if [ "$ACCOUNT_NAME" = "" ]
+if [ -z ${CONTROLLER_USER} ]
 then
-echo "ACCOUNT_NAME NOT Found, setting to default"
-ACCOUNT_NAME=customer1
+    echo "CONTROLLER_USER not Found, using default"
+    CONTROLLER_USER=user1
+else
+    echo "CONTROLLER_USER: ${CONTROLLER_USER}"
 fi
 
-if [ "$ACCOUNT_ACCESS_KEY" = "" ]
+if [ -z ${CONTROLLER_PWD} ]
 then
-echo "ACCOUNT_ACCESS_KEY NOT Found, setting to default"
-ACCOUNT_ACCESS_KEY=
+    echo "CONTROLLER_PWD not Found, using default"
+    CONTROLLER_PWD=welcome
+else
+    echo "CONTROLLER_PWD: ${CONTROLLER_PWD}"
+fi
+
+if [ -z ${CONTROLLER_ACCOUNT} ]
+then
+    echo "CONTROLLER_ACCOUNT not Found, using default"
+    CONTROLLER_ACCOUNT=customer1
+else
+    echo "CONTROLLER_ACCOUNT: ${CONTROLLER_ACCOUNT}"
 fi
 
 # This is the port on which active mq starts

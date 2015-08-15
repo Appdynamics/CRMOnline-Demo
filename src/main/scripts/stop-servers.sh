@@ -1,15 +1,7 @@
 #!/bin/bash
 
-# while read line
-# do
-#     if [ -z "$line" ]
-#     then
-#         echo ""
-#     else
-#         echo "Killing the process $line"
-#         kill -9 $line
-#     fi
-# done < pids.txt
-# echo "" > pids.txt
+DEMO_SERVERS="$(ps -ef|grep crmonline-demo-server|grep -v grep|awk '{print $2}')"
 
-kill -9 $(ps -ef|grep crmonline-demo-server|grep -v grep|awk '{print $2}')
+if [ ! -z "${DEMO_SERVERS}" ]; then
+    kill -9 "${DEMO_SERVERS}"
+fi
