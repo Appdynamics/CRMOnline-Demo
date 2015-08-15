@@ -48,5 +48,11 @@ else
     echo "CONTROLLER_ACCOUNT: ${CONTROLLER_ACCOUNT}"
 fi
 
+if [ -z "${ACCOUNT_NAME}" ]
+then
+    echo "ACCOUNT_NAME NOT Found, setting to default"
+    ACCOUNT_NAME=customer1
+fi
+
 # This is the port on which active mq starts
 ACTIVEMQ_PORT=61617
