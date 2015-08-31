@@ -18,7 +18,7 @@ ENV PATH $PATH:$JAVA_HOME/bin
 
 RUN mkdir -p /AppDynamics
 ADD AppServerAgent.zip /AppDynamics/
-RUN cd /AppDynamics && unzip -q AppServerAgent.zip
+RUN cd /AppDynamics && unzip -q AppServerAgent.zip && rm AppServerAgent.zip
 
 RUN mkdir -p /CRM-Demo
 COPY src /CRM-Demo/src
@@ -32,6 +32,13 @@ RUN chmod +x /CRM-Demo/target/crmonline-demo-dist/start-servers.sh
 RUN chmod +x /CRM-Demo/target/crmonline-demo-dist/start-load.sh
 RUN chmod +x /CRM-Demo/target/crmonline-demo-dist/stop-servers.sh
 RUN chmod +x /CRM-Demo/target/crmonline-demo-dist/stop-load.sh
+
+ENV ANALYTICS_AGENT_HOME /analytics-agent
+ADD AnalyticsAgent.zip /
+RUN unzip AnalyticsAgent.zip
+RUN rm -f AnalyticsAgent.zip
+ADD start-analytics.sh /usr/bin/start-analytics
+RUN chmod 744 /usr/bin/start-analytics
 
 WORKDIR /CRM-Demo/target/crmonline-demo-dist/
 CMD ["bash", "docker-start.sh"]
