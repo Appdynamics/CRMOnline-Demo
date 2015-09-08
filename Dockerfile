@@ -5,12 +5,12 @@ RUN yum -y install tar
 RUN yum -y install ntp
 
 # Install Oracle JDK
-ADD jdk-7u79-linux-x64.rpm /
-RUN rpm -Uvh /jdk-7u79-linux-x64.rpm
-RUN rm /jdk-7u79-linux-x64.rpm
+ADD jdk-linux-x64.rpm /
+RUN rpm -Uvh /jdk-linux-x64.rpm
+RUN rm /jdk-linux-x64.rpm
 
 # Install Apache Maven
-ADD apache-maven-3.3.3-bin.tar.gz /usr/local/
+RUN (cd /usr/local; curl -O -k http://apache.mirrors.ionfish.org//maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz; tar -xzf apache-maven-3.3.3-bin.tar.gz)
 RUN ln -s /usr/local/apache-maven-3.3.3/bin/mvn /usr/bin/mvn
 
 ENV JAVA_HOME /usr/java/default
