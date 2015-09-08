@@ -46,7 +46,7 @@ buildDemoContainer() {
   echo
   cp .appdynamics/AppServerAgent.zip .
   cp .appdynamics/AnalyticsAgent.zip .
-  (docker build --no-cache -t appdynamics/telecomr-demo .)
+  (docker build --no-cache -t appdynamics/crmonline-demo .)
 }
 
 # Temp dir for agents
