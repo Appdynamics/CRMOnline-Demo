@@ -342,12 +342,12 @@
         <repository>
             <id>nexus</id>
             <name>Internal Releases</name>
-            <url>http://lnx-nexus1.corp.appdynamics.com:8081/nexus/content/repositories/third-party-for-cs/</url>
+            <url>https://lnx-nexus1.corp.appdynamics.com:8081/nexus/content/repositories/third-party-for-cs/</url>
         </repository>
         <snapshotRepository>
             <id>nexus</id>
             <name>Internal Releases</name>
-            <url>http://lnx-nexus1.corp.appdynamics.com:8081/nexus/content/repositories/third-party-for-cs/</url>
+            <url>https://lnx-nexus1.corp.appdynamics.com:8081/nexus/content/repositories/third-party-for-cs/</url>
         </snapshotRepository>
     </distributionManagement>
 </project>
